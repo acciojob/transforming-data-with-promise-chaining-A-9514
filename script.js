@@ -1,17 +1,65 @@
-const express = require('express');
-const path = require('path');
+//your JS code here. If required.
+let input = document.getElementById("ip");
+let btn = document.getElementById("btn");
+let output = document.getElementById("output")
 
-const app = express();
+btn.addEventListener("click" , PromiseChaining)
+function PromiseChaining(){
+  const promise1 = new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(input.value);
+    }, 2000);
+  });
 
-app.use(express.static(__dirname))
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname + '/main.html'));
-});
-//your code here
-app.post('/add', (req, res) => {
-  const {a,b} = req.body;
-  res.status(200).send(a+b);
-  // res.sendFile(path.join(__dirname + '/main.html'));
-});
-module.exports = app;
+  promise1
+    .then((result) => {
+      output.textContent = `Result: ${result}`;
+      return result;
+    })
+    .then((result) => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(result * 2);
+        }, 1000);
+      });
+    })
+    .then((result) => {
+      output.textContent = `Result: ${result}`;
+      return result;
+    })
+    .then((result) => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(result - 3);
+        }, 1000);
+      });
+    })
+    .then((result) => {
+      output.textContent = `Result: ${result}`;
+      return result;
+    })
+    .then((result) => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(result / 2);
+        }, 1000);
+      });
+    })
+    .then((result) => {
+      output.textContent = `Result: ${result}`;
+      return result;
+    })
+    .then((result) => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(result + 10);
+        }, 1000);
+      });
+    })
+    .then((result) => {
+      output.textContent = `Final Result: ${result}`;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
